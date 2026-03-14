@@ -10,9 +10,9 @@ Opinto-ohjelma: tietojenkäsittelytieteen kandidaatti (TKT)
 
 ## Yleinen kuvaus
 
-Projektissa vertaillaan reitinhakualgoritmeja. Projektissa toteutetaan ainakin A\* ja JPS algoritmit.
+Projektissa vertaillaan reitinhakualgoritmeja. Projektissa toteutetaan ainakin A\* ja jump point search (JPS) algoritmit.
 
-Ohjelma saa syötteeksi 2D pikselikartan, jota käyttämälle se vertailee projektissa toteutettuja algoritmeja. Vertailu visualisoidaan reaaliajassa jotenkin esim. tkinterin tai pygamen avulla.
+Ohjelma saa syötteeksi 2D pikselikartan, jota käyttämälle se vertailee projektissa toteutettuja algoritmeja. Vertailu visualisoidaan reaaliajassa jotenkin esim. pygamen avulla.
 
 ## Aika- ja tilavaativuus tavoitteet
 
