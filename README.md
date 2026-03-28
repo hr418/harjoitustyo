@@ -6,6 +6,10 @@ Tietojenkäsittelytieteen aineopintojen harjoitustyö (algoritmit ja tekoäly)
 
 [Viikkoraportti 1](Viikkoraportit/Viikko1.md)
 
+[Viikkoraportti 2](Viikkoraportit/Viikko2.md)
+
+[Viikkoraportti 3](Viikkoraportit/Viikko3.md)
+
 ## Sovelluksen käyttö
 
 Halutessasi ensin esim. (Sovellus tehty python versiolla 3.12, varmasti tomii myös monella muulla)
