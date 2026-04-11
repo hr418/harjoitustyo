@@ -8,12 +8,13 @@ class PathfindingAlgorithm:
 
     def __init__(self, pixel_map):
         self.pixel_map = pixel_map
+        self.done = False
 
     def search_step(self):
         """
         Performs a single step of the pathfinding algorithm.
 
-        Returns (tuple or None): A tuple containing the (x, y) position of the current node, or None if no path is found.
+        Returns (tuple): A tuple containing a list of (x, y) positions that were added to the open set and a list of (x, y) positions that were added to the closed set.
         """
         raise NotImplementedError("This method should be implemented by subclasses")
 
