@@ -10,6 +10,8 @@ Tietojenkäsittelytieteen aineopintojen harjoitustyö (algoritmit ja tekoäly)
 
 [Viikkoraportti 3](Viikkoraportit/Viikko3.md)
 
+[Viikkoraportti 4](Viikkoraportit/Viikko4.md)
+
 ## Sovelluksen käyttö
 
 Halutessasi ensin esim. (Sovellus tehty python versiolla 3.12, varmasti tomii myös monella muulla)
@@ -23,4 +25,4 @@ Asenna riippuvuudet
 
 Aja sovellus
 
-    wip
+    python src/app.py
