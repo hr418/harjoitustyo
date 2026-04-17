@@ -6,6 +6,7 @@ class PixelMap:
         self.image = Image.open(image_path)
         self.start = start
         self.end = end
+        self.width, self.height = self.image.size
 
     def is_walkable(self, position):
         x, y = position
