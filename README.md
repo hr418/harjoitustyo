@@ -14,7 +14,9 @@ Tietojenkäsittelytieteen aineopintojen harjoitustyö (algoritmit ja tekoäly)
 
 ## Sovelluksen käyttö
 
-Halutessasi ensin esim. (Sovellus tehty python versiolla 3.12, varmasti tomii myös monella muulla)
+Kloonaa repositorio ja siirry juureen.
+
+Halutessasi voit perustaa virtuaaliympäritön esim. (Sovellus tehty python versiolla 3.12, varmasti tomii myös monella muulla) (Saattaa poiketa esim. komentotulkista riippuen)
 
     python3.12 -m venv venv
     source ./venv/bin/activate

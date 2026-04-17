@@ -1,7 +1,7 @@
 import pygame
-from src.pixel_map import PixelMap
-from src.algorithms.a_star import AStar
-from src.algorithms.jump_point_search import JumpPointSearch
+from pixel_map import PixelMap
+from algorithms.a_star import AStar
+from algorithms.jump_point_search import JumpPointSearch
 
 pixel_map = PixelMap("maps/AR0012SR.png", (8, 69), (133, 91))
 

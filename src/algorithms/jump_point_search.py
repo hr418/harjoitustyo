@@ -1,5 +1,5 @@
 import heapq
-from src.algorithms.a_star import AStar, AStarNode
+from algorithms.a_star import AStar, AStarNode
 
 
 class JumpPointSearchNode(AStarNode):
