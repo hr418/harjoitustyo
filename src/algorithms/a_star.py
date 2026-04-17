@@ -82,7 +82,7 @@ class AStar(PathfindingAlgorithm):
 
             if self.current_node.position == self.pixel_map.end:
                 self.done = True
-                raise StopIteration
+                return
 
             neighbors = []
 

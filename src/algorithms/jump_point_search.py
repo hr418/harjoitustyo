@@ -137,7 +137,7 @@ class JumpPointSearch(AStar):
 
             if self.current_node.position == self.pixel_map.end:
                 self.done = True
-                raise StopIteration
+                return
 
             for direction in self._pruned_directions(self.current_node):
                 jump_position = self._jump(self.current_node.position, direction)
