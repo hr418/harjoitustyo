@@ -1,4 +1,5 @@
 import heapq
+import math
 from algorithms.a_star import AStar, AStarNode
 
 
@@ -8,9 +9,9 @@ class JumpPointSearchNode(AStarNode):
 
     Attributes:
         position (tuple): The (x, y) position of the node.
-        g_cost (int): The cost from the start node to this node.
-        h_cost (int): The heuristic cost from this node to the goal node.
-        f_cost (int): The total cost (g_cost + h_cost).
+        g_cost (float): The cost from the start node to this node.
+        h_cost (float): The heuristic cost from this node to the goal node.
+        f_cost (float): The total cost (g_cost + h_cost).
         parent (JumpPointSearchNode): The parent node in the path.
     """
 
@@ -33,7 +34,11 @@ class JumpPointSearch(AStar):
         )
 
     def _distance(self, start, end):
-        return max(abs(end[0] - start[0]), abs(end[1] - start[1]))
+        dx = abs(end[0] - start[0])
+        dy = abs(end[1] - start[1])
+        diagonal_steps = min(dx, dy)
+        straight_steps = max(dx, dy) - diagonal_steps
+        return diagonal_steps * math.sqrt(2) + straight_steps
 
     def _is_walkable(self, position):
         return self.pixel_map.is_walkable(position)

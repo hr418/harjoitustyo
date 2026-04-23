@@ -3,7 +3,7 @@ from pixel_map import PixelMap
 from algorithms.a_star import AStar
 from algorithms.jump_point_search import JumpPointSearch
 
-# This file is very much a work in progress, much of it is temporary to have some visualisation of the algorithms. And yes i need to fix the diagonal movement cost
+# This file is very much a work in progress, much of it is temporary to have some visualisation of the algorithms
 
 
 def draw_map(screen, positions, path, offset_x):
@@ -119,7 +119,9 @@ while running:
     if not a_star_done:
         try:
             opn, cls = next(a_star.search_step())
-            a_star_positions.update({pos: "open" for pos in opn})
+            a_star_positions.update(
+                {pos: "open" for pos in opn if a_star_positions.get(pos) != "closed"}
+            )
             a_star_positions.update({pos: "closed" for pos in cls})
         except StopIteration:
             a_star_done = True
@@ -133,7 +135,13 @@ while running:
     if not jump_point_search_done:
         try:
             opn, cls = next(jump_point_search.search_step())
-            jump_point_search_positions.update({pos: "open" for pos in opn})
+            jump_point_search_positions.update(
+                {
+                    pos: "open"
+                    for pos in opn
+                    if jump_point_search_positions.get(pos) != "closed"
+                }
+            )
             jump_point_search_positions.update({pos: "closed" for pos in cls})
         except StopIteration:
             jump_point_search_done = True

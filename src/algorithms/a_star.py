@@ -1,4 +1,5 @@
 import heapq
+import math
 from algorithms.base import PathfindingAlgorithm
 
 
@@ -8,9 +9,9 @@ class AStarNode:
 
     Attributes:
         position (tuple): The (x, y) position of the node.
-        g_cost (int): The cost from the start node to this node.
-        h_cost (int): The heuristic cost from this node to the goal node.
-        f_cost (int): The total cost (g_cost + h_cost).
+        g_cost (float): The cost from the start node to this node.
+        h_cost (float): The heuristic cost from this node to the goal node.
+        f_cost (float): The total cost (g_cost + h_cost).
         parent (AStarNode): The parent node in the path.
     """
 
@@ -56,16 +57,16 @@ class AStar(PathfindingAlgorithm):
 
     def _heuristic(self, node):
         """
-        Heuristic function for A* algorithm. Uses chebyshev distance.
+        Heuristic function for A* algorithm. Uses octile distance.
 
         Args:
             node (tuple): The (x, y) position of the current node.
 
-        Returns (int): The heuristic cost from the node to the goal.
+        Returns (float): The heuristic cost from the node to the goal.
         """
-        return max(
-            abs(node[0] - self.pixel_map.end[0]), abs(node[1] - self.pixel_map.end[1])
-        )
+        dx = abs(node[0] - self.pixel_map.end[0])
+        dy = abs(node[1] - self.pixel_map.end[1])
+        return (dx + dy) + (math.sqrt(2) - 2) * min(dx, dy)
 
     def search_step(self):
         while self.open_set:
@@ -104,7 +105,15 @@ class AStar(PathfindingAlgorithm):
                     neighbors.append(neighbor_pos)
 
             for neighbor in neighbors:
-                g_cost = self.current_node.g_cost + 1
+                if neighbor in self.closed_set:
+                    continue
+
+                is_diagonal = (
+                    neighbor[0] != self.current_node.position[0]
+                    and neighbor[1] != self.current_node.position[1]
+                )
+                step_cost = math.sqrt(2) if is_diagonal else 1
+                g_cost = self.current_node.g_cost + step_cost
 
                 if g_cost >= self.g_scores.get(neighbor, float("inf")):
                     continue
