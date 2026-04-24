@@ -12,6 +12,8 @@ Tietojenkäsittelytieteen aineopintojen harjoitustyö (algoritmit ja tekoäly)
 
 [Viikkoraportti 4](Viikkoraportit/Viikko4.md)
 
+[Viikkoraportti 6](Viikkoraportit/Viikko6.md)
+
 ## Sovelluksen käyttö
 
 Kloonaa repositorio ja siirry juureen.
