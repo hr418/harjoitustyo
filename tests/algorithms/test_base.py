@@ -1,5 +1,5 @@
 import unittest
-from src.algorithms.base import PathfindingAlgorithm
+from algorithms.base import PathfindingAlgorithm
 
 
 class TestPathfindingAlgorithm(unittest.TestCase):

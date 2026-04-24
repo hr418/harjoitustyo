@@ -10,8 +10,9 @@ class PixelMap:
 
     def is_walkable(self, position):
         x, y = position
+
         return (
-            0 <= x < self.image.width
-            and 0 <= y < self.image.height
-            and self.image.getpixel((x, y)) == (255, 255, 255)
+            0 <= x < self.width
+            and 0 <= y < self.height
+            and self.image.getpixel((x, y))[:3] == (255, 255, 255)
         )
