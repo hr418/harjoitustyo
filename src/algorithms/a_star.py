@@ -51,6 +51,7 @@ class AStar(PathfindingAlgorithm):
             )
         ]
         heapq.heapify(self.open_set)
+        self.open_count = 1
         self.current_node = None
         self.closed_set = set()
         self.g_scores = {pixel_map.start: 0}
@@ -78,11 +79,18 @@ class AStar(PathfindingAlgorithm):
             if self.current_node.position in self.closed_set:
                 continue
 
+            if self.current_node.g_cost > self.g_scores.get(
+                self.current_node.position, float("inf")
+            ):
+                continue
+
             self.closed_set.add(self.current_node.position)
+            self.closed_count += 1
             positions_added_to_closed.append(self.current_node.position)
 
             if self.current_node.position == self.pixel_map.end:
                 self.done = True
+                self.path_length = self.current_node.g_cost
                 return
 
             neighbors = []
@@ -124,6 +132,7 @@ class AStar(PathfindingAlgorithm):
                     neighbor, g_cost=g_cost, h_cost=h_cost, parent=self.current_node
                 )
                 heapq.heappush(self.open_set, neighbor_node)
+                self.open_count += 1
                 positions_added_to_open.append(neighbor)
 
             yield (positions_added_to_open, positions_added_to_closed)

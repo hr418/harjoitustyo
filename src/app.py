@@ -87,6 +87,13 @@ def draw_map(screen, positions, path, offset_x):
     )
 
 
+def print_algorithm_stats(name, algorithm):
+    print(f"{name} path length:", algorithm.path_length)
+    print(f"{name} nodes added to closed set:", algorithm.closed_count)
+    print(f"{name} nodes added to open set:", algorithm.open_count)
+    print(f"{name} time:", algorithm.measure_performance())
+
+
 pixel_map = PixelMap("maps/AR0012SR.png", (8, 69), (133, 91))
 PIXEL_SCALE = 8
 
@@ -96,9 +103,16 @@ jump_point_search = JumpPointSearch(pixel_map)
 a_star_positions = {}
 a_star_path = []
 a_star_done = False
+a_star_stats_printed = False
+a_star_search_gen = a_star.search_step()
+a_star_reconstruct_gen = None
+
 jump_point_search_positions = {}
 jump_point_search_path = []
 jump_point_search_done = False
+jump_point_search_stats_printed = False
+jps_search_gen = jump_point_search.search_step()
+jps_reconstruct_gen = None
 
 # Initialize Pygame
 pygame.init()
@@ -118,23 +132,27 @@ while running:
 
     if not a_star_done:
         try:
-            opn, cls = next(a_star.search_step())
+            opn, cls = next(a_star_search_gen)
             a_star_positions.update(
                 {pos: "open" for pos in opn if a_star_positions.get(pos) != "closed"}
             )
             a_star_positions.update({pos: "closed" for pos in cls})
         except StopIteration:
             a_star_done = True
+            a_star_reconstruct_gen = a_star.reconstruct_step()
+            if not a_star_stats_printed:
+                print_algorithm_stats("A*", a_star)
+                a_star_stats_printed = True
     else:
         try:
-            pos = next(a_star.reconstruct_step())
+            pos = next(a_star_reconstruct_gen)
             a_star_path.append(pos)
         except StopIteration:
             pass
 
     if not jump_point_search_done:
         try:
-            opn, cls = next(jump_point_search.search_step())
+            opn, cls = next(jps_search_gen)
             jump_point_search_positions.update(
                 {
                     pos: "open"
@@ -145,9 +163,13 @@ while running:
             jump_point_search_positions.update({pos: "closed" for pos in cls})
         except StopIteration:
             jump_point_search_done = True
+            jps_reconstruct_gen = jump_point_search.reconstruct_step()
+            if not jump_point_search_stats_printed:
+                print_algorithm_stats("Jump Point Search", jump_point_search)
+                jump_point_search_stats_printed = True
     else:
         try:
-            pos = next(jump_point_search.reconstruct_step())
+            pos = next(jps_reconstruct_gen)
             jump_point_search_path.append(pos)
         except StopIteration:
             pass

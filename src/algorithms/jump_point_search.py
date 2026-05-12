@@ -50,12 +50,12 @@ class JumpPointSearch(AStar):
         forced = []
 
         if dx != 0 and dy != 0:
-            if not self._is_walkable((x - dx, y + dy)) and self._is_walkable(
-                (x - dx, y)
+            if not self._is_walkable((x - dx, y)) and self._is_walkable(
+                (x - dx, y + dy)
             ):
                 forced.append((-dx, dy))
-            if not self._is_walkable((x + dx, y - dy)) and self._is_walkable(
-                (x, y - dy)
+            if not self._is_walkable((x, y - dy)) and self._is_walkable(
+                (x + dx, y - dy)
             ):
                 forced.append((dx, -dy))
             return forced
@@ -134,14 +134,21 @@ class JumpPointSearch(AStar):
 
             self.current_node = heapq.heappop(self.open_set)
 
+            if self.current_node.g_cost > self.g_scores.get(
+                self.current_node.position, float("inf")
+            ):
+                continue
+
             if self.current_node.position in self.closed_set:
                 continue
 
             self.closed_set.add(self.current_node.position)
+            self.closed_count += 1
             positions_added_to_closed.append(self.current_node.position)
 
             if self.current_node.position == self.pixel_map.end:
                 self.done = True
+                self.path_length = self.current_node.g_cost
                 return
 
             for direction in self._pruned_directions(self.current_node):
@@ -166,5 +173,6 @@ class JumpPointSearch(AStar):
                 )
                 positions_added_to_open.append(jump_position)
                 heapq.heappush(self.open_set, jump_node)
+                self.open_count += 1
 
             yield (positions_added_to_open, positions_added_to_closed)
