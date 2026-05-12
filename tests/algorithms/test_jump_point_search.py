@@ -134,7 +134,7 @@ class TestJumpPointSearchForcedDirections(unittest.TestCase):
 
     def test_forced_directions_diagonal_movement(self):
         def is_walkable(pos):
-            if pos == (4, 6):  # Block lower left
+            if pos == (4, 5):  # Block to the left
                 return False
             return True
 

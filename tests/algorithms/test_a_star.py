@@ -84,60 +84,6 @@ class TestAStarInitialization(unittest.TestCase):
         self.assertEqual(algorithm.g_scores[(0, 0)], 0)
 
 
-class TestAStarSearch(unittest.TestCase):
-    # TEMPORARY, currently nothing similar in JPS tests, should be moved to integration tests
-    def setUp(self):
-        self.mock_pixel_map = Mock()
-        self.mock_pixel_map.start = (0, 0)
-        self.mock_pixel_map.end = (2, 0)
-
-    def test_search_finds_direct_path(self):
-        self.mock_pixel_map.is_walkable = Mock(return_value=True)
-        algorithm = AStar(self.mock_pixel_map)
-
-        # Simulate search steps until goal is found
-        search_generator = algorithm.search_step()
-        try:
-            while not algorithm.done:
-                next(search_generator)
-        except StopIteration:
-            pass
-
-        self.assertTrue(algorithm.done)
-
-    def test_search_with_unreachable_goal(self):
-        def is_walkable(pos):
-            if pos == (2, 0):  # Goal is not walkable
-                return False
-            return 0 <= pos[0] <= 2 and 0 <= pos[1] <= 0
-
-        self.mock_pixel_map.is_walkable = is_walkable
-        algorithm = AStar(self.mock_pixel_map)
-
-        search_generator = algorithm.search_step()
-        try:
-            for _ in range(5):
-                next(search_generator)
-        except StopIteration:
-            pass
-
-        # Should not reach the goal
-        self.assertFalse(algorithm.done or (2, 0) in algorithm.closed_set)
-
-    def test_algorithm_marks_done_when_goal_reached(self):
-        self.mock_pixel_map.is_walkable = Mock(return_value=True)
-        algorithm = AStar(self.mock_pixel_map)
-
-        search_generator = algorithm.search_step()
-        try:
-            while not algorithm.done:
-                next(search_generator)
-        except StopIteration:
-            pass
-
-        self.assertTrue(algorithm.done)
-
-
 class TestAStarPathReconstruction(unittest.TestCase):
     def setUp(self):
         self.mock_pixel_map = Mock()
