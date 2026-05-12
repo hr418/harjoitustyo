@@ -1,9 +1,9 @@
+import json
+from pathlib import Path
 import pygame
 from pixel_map import PixelMap
 from algorithms.a_star import AStar
 from algorithms.jump_point_search import JumpPointSearch
-
-# This file is very much a work in progress, much of it is temporary to have some visualisation of the algorithms
 
 
 def draw_map(screen, positions, path, offset_x):
@@ -17,7 +17,7 @@ def draw_map(screen, positions, path, offset_x):
             pygame.draw.rect(
                 screen,
                 color,
-                (offset_x + x * PIXEL_SCALE, y * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE),
+                (offset_x + x * pixel_scale, y * pixel_scale, pixel_scale, pixel_scale),
             )
 
     # Draw open set
@@ -27,10 +27,10 @@ def draw_map(screen, positions, path, offset_x):
                 screen,
                 (0, 255, 0),
                 (
-                    offset_x + position[0] * PIXEL_SCALE,
-                    position[1] * PIXEL_SCALE,
-                    PIXEL_SCALE,
-                    PIXEL_SCALE,
+                    offset_x + position[0] * pixel_scale,
+                    position[1] * pixel_scale,
+                    pixel_scale,
+                    pixel_scale,
                 ),
             )
 
@@ -41,10 +41,10 @@ def draw_map(screen, positions, path, offset_x):
                 screen,
                 (0, 0, 255),
                 (
-                    offset_x + position[0] * PIXEL_SCALE,
-                    position[1] * PIXEL_SCALE,
-                    PIXEL_SCALE,
-                    PIXEL_SCALE,
+                    offset_x + position[0] * pixel_scale,
+                    position[1] * pixel_scale,
+                    pixel_scale,
+                    pixel_scale,
                 ),
             )
 
@@ -56,8 +56,8 @@ def draw_map(screen, positions, path, offset_x):
             False,
             [
                 (
-                    offset_x + pos[0] * PIXEL_SCALE + PIXEL_SCALE // 2,
-                    pos[1] * PIXEL_SCALE + PIXEL_SCALE // 2,
+                    offset_x + pos[0] * pixel_scale + pixel_scale // 2,
+                    pos[1] * pixel_scale + pixel_scale // 2,
                 )
                 for pos in path
             ],
@@ -69,20 +69,20 @@ def draw_map(screen, positions, path, offset_x):
         screen,
         (255, 255, 0),
         (
-            offset_x + pixel_map.start[0] * PIXEL_SCALE,
-            pixel_map.start[1] * PIXEL_SCALE,
-            PIXEL_SCALE,
-            PIXEL_SCALE,
+            offset_x + pixel_map.start[0] * pixel_scale,
+            pixel_map.start[1] * pixel_scale,
+            pixel_scale,
+            pixel_scale,
         ),
     )
     pygame.draw.rect(
         screen,
         (255, 0, 255),
         (
-            offset_x + pixel_map.end[0] * PIXEL_SCALE,
-            pixel_map.end[1] * PIXEL_SCALE,
-            PIXEL_SCALE,
-            PIXEL_SCALE,
+            offset_x + pixel_map.end[0] * pixel_scale,
+            pixel_map.end[1] * pixel_scale,
+            pixel_scale,
+            pixel_scale,
         ),
     )
 
@@ -91,14 +91,37 @@ def print_algorithm_stats(name, algorithm):
     print(f"{name} path length:", algorithm.path_length)
     print(f"{name} nodes added to closed set:", algorithm.closed_count)
     print(f"{name} nodes added to open set:", algorithm.open_count)
-    print(f"{name} time:", algorithm.measure_performance())
+    print(f"{name} time:", algorithm.time)
+    print("\n")
 
 
-pixel_map = PixelMap("maps/AR0012SR.png", (8, 69), (133, 91))
-PIXEL_SCALE = 8
+CONFIG_PATH = "./config.json"
+
+try:
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        cfg = json.load(f)
+except FileNotFoundError:
+    raise FileNotFoundError(f"Configuration file not found at: {CONFIG_PATH}")
+
+required_keys = ["pixel_map_path", "start", "end", "pixel_scale"]
+missing = [k for k in required_keys if k not in cfg]
+if missing:
+    raise KeyError(f"Missing configuration keys: {', '.join(missing)}")
+
+pixel_map_path = cfg["pixel_map_path"]
+start = tuple(cfg["start"])
+end = tuple(cfg["end"])
+pixel_scale = cfg["pixel_scale"]
+
+pixel_map = PixelMap(pixel_map_path, start, end)
 
 a_star = AStar(pixel_map)
 jump_point_search = JumpPointSearch(pixel_map)
+
+print("\nMeasuring algorithm performance... The visualization will launch soon.\n")
+
+a_star.measure_performance()
+jump_point_search.measure_performance()
 
 a_star_positions = {}
 a_star_path = []
@@ -119,7 +142,7 @@ pygame.init()
 
 # Set up the app window
 screen = pygame.display.set_mode(
-    ((pixel_map.width * 2 + 1) * PIXEL_SCALE, pixel_map.height * PIXEL_SCALE)
+    ((pixel_map.width * 2 + 1) * pixel_scale, pixel_map.height * pixel_scale)
 )
 pygame.display.set_caption("Pathfinding Visualization")
 
@@ -183,7 +206,7 @@ while running:
         screen,
         jump_point_search_positions,
         jump_point_search_path,
-        pixel_map.width * PIXEL_SCALE + PIXEL_SCALE,
+        pixel_map.width * pixel_scale + pixel_scale,
     )
 
     # Update the display

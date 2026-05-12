@@ -15,6 +15,7 @@ class PathfindingAlgorithm:
         self.closed_count = 0
         self.open_count = 0
         self.path_length = 0
+        self.time = 0
 
     def search_step(self):
         """
@@ -49,4 +50,5 @@ class PathfindingAlgorithm:
 
         times = timeit.repeat(run_one_search, number=10, repeat=10)
 
+        self.time = min(times)
         return min(times)
