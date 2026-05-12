@@ -30,3 +30,7 @@ Asenna riippuvuudet
 Aja sovellus
 
     python src/app.py
+
+Karttaa ja sovelluksen ikkunan kokoa voi vaihtaa config.json tiedostossa.
+
+Sovellus tulostaa tietoa algoritmeistä ajon aikana.
