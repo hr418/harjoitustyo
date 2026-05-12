@@ -4,6 +4,10 @@ Tietojenkäsittelytieteen aineopintojen harjoitustyö (algoritmit ja tekoäly)
 
 [Määrittelydokumentti](Dokumentaatio/Määrittelydokumentti.md)
 
+[Testausdokumentti](Dokumentaatio/Testausdokumentti.md)
+
+[Toteutusdokumentti](Dokumentaatio/Toteutusdokumentti.md)
+
 [Viikkoraportti 1](Viikkoraportit/Viikko1.md)
 
 [Viikkoraportti 2](Viikkoraportit/Viikko2.md)

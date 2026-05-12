@@ -45,7 +45,7 @@ JPS pseudokoodi:
 
 A\* aikavaativuus: Jokainen solmu saatetaan tarkistaa kerran, ja prioriteettijonon operaatiot ovat aikavaativuudeltaan $\log V$, jossa $V$ on solmujen määrä. Joten algoritmin aikavaativuus on $O(V \log V)$. (Joka taitaa olla sama kuin määrittelydokumentissa mainittu $O(E \log V)$, mutta en tiiä miten tässä tapauksessa sen kaarien määrän saisi solmujen tilalle.)
 
-JPS aikavaativuus: A\* toimii JPS:än pohjana, vaikka JPS:än tapauksessa solmuja tutkitaan usein vähemmän, on yhden solmun tutkiminen on kalliimpaa. JPS:än erot eivät kuitenkaan vaikuta aikavaativuus analyysiin, joten myös JPS:än aikavaativuus on $O(V \log V)$.
+JPS aikavaativuus: A\* toimii JPS:än pohjana. Vaikka JPS:än tapauksessa solmuja tutkitaan usein vähemmän, on yhden solmun tutkiminen on kalliimpaa. JPS:än erot eivät kuitenkaan vaikuta aikavaativuus analyysiin, joten myös JPS:än aikavaativuus on $O(V \log V)$.
 
 Algoritmien tilavaativuudet: Molempien algoritmien tilavaativuudet ovat $O(V)$, koska jokaista solmua kohti algoritmeissä käytetyissä tietorakenteissa voi olla enintään yksi alkio.
 
