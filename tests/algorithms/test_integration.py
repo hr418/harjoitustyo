@@ -34,7 +34,7 @@ class TestIntegration(unittest.TestCase):
                     self.astar._heuristic(position), self.jps._heuristic(position)
                 )
 
-    def test_astar_and_jps_find_same_path_length(self):
+    def test_astar_and_jps_find_same_path_length_simple(self):
         for iteration in range(10):
             with self.subTest(iteration=iteration):
                 mock_pixel_map = Mock()
@@ -65,6 +65,37 @@ class TestIntegration(unittest.TestCase):
                 self.assertTrue(astar.done)
                 self.assertTrue(jps.done)
                 self.assertAlmostEqual(astar.path_length, jps.path_length, places=5)
+
+    def test_astar_find_correct_path_length(self):
+        for start, stop in [
+            ((1, 1), (254, 254)),
+            ((254, 254), (1, 1)),
+        ]:
+            with self.subTest(start=start, stop=stop):
+                pixel_map = PixelMap("tests/maps/256x256-city.png", start, stop)
+
+                astar = AStar(pixel_map)
+
+                for _ in astar.search_step():
+                    pass
+
+                self.assertTrue(astar.done)
+                self.assertAlmostEqual(astar.path_length, 378.884, places=3)
+
+        for start, stop in [
+            ((254, 1), (1, 254)),
+            ((1, 254), (254, 1)),
+        ]:
+            with self.subTest(start=start, stop=stop):
+                pixel_map = PixelMap("tests/maps/256x256-city.png", start, stop)
+
+                astar = AStar(pixel_map)
+
+                for _ in astar.search_step():
+                    pass
+
+                self.assertTrue(astar.done)
+                self.assertAlmostEqual(astar.path_length, 373.026, places=3)
 
 
 class TestAlgorithmsSearch(unittest.TestCase):
