@@ -14,5 +14,5 @@ class PixelMap:
         return (
             0 <= x < self.width
             and 0 <= y < self.height
-            and self.image.getpixel((x, y))[:3] == (255, 255, 255)
+            and sum(self.image.getpixel((x, y))[:3]) >= 128 * 3
         )
